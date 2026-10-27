@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package: '
 
 class ProfileScreen extends StatefulWidget {
-  // PERBAIKAN: Mengubah 'new' menjadi nama class 'ProfileScreen'
   const ProfileScreen({super.key});
 
   @override
@@ -11,78 +9,188 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   // TODO: 1. Deklarasikan variabel yang dibutuhkan
-  bool isSignedIn = false;
-  String fullName = ' ';
-  String userName = '';
-  int favoriteCandiCount = 0;
-   
+  bool isSignedIn = true; // Set true untuk demo/testing tampilan terisi
+  String fullName = 'Muhammad Rachmadi'; //
+  String userName = 'rachmadi'; //
+  int favoriteCandiCount = 0; //
+
+  // TODO: 5. Implementasi fungsi signIn
+  void signIn() {
+    setState(() {
+      isSignedIn = !isSignedIn; //
+    });
+  }
+
+  // TODO: 6. Implementasi fungsi signOut
+  void signOut() {
+    setState(() {
+      isSignedIn = !isSignedIn; //
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
+          // Latar ungu di bagian atas
           Container(
-            height: 200,
-            width: double.infinity,
-            color: Colors.deepPurple,
+            height: 200, //
+            width: double.infinity, //
+            color: Colors.deepPurple, //
           ),
-          // Tambahkan SafeArea dan Padding agar tata letak rapi
-          SafeArea(
+          // Isi Layar Utama
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0), //
             child: Column(
               children: [
-                const SizedBox(height: 50), // Memberi jarak dari atas layar
-                // TODO: 2. Buat ProfileHeader (foto profil)
-                Center(
-                  child: Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          // PERBAIKAN: Menambahkan koma setelah 'width: 2'
-                          border: Border.all(color: Colors.deepPurple, width: 2),
-                          shape: BoxShape.circle,
+                // TODO: 2. Buat ProfileHeader (foto profil dan ikon kamera)
+                Align(
+                  alignment: Alignment.topCenter, //
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 200 - 50,
+                    ), // 200 tinggi container - 50 radius foto
+                    child: Stack(
+                      alignment: Alignment.bottomRight, //
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.deepPurple,
+                              width: 2,
+                            ), //
+                            shape: BoxShape.circle, //
+                          ),
+                          child: const CircleAvatar(
+                            radius: 50, //
+                            backgroundImage: AssetImage(
+                              'images/placeholder_image.png',
+                            ), //
+                          ),
                         ),
-                        child: const CircleAvatar(
-                          radius: 50,
-                          // Menggunakan aset gambar default atau placeholder
-                          backgroundImage: AssetImage('assets/images/placeholder.png'),
-                        ),
-                      ),
-                      // Contoh tombol edit foto di pojok kanan bawah avatar
-                      if (isSignedIn)
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.camera_alt, 
-                              color: Colors.deepPurple),
-                        ),
-                    ],
+                        if (isSignedIn) //
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.camera_alt,
+                              color: Colors.deepPurple[50], //
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
-
                 ),
                 const SizedBox(height: 20),
-                // TODO: 3. Buat ProfileInfo (info pengguna)
-                Row(children: [
-                  SizedBox(
-                    width: mediaQuery.of(context).size.width / 3,
-                    child: const Row(children: [
-                      Icon(Icons.lock, color: Colors.amber),
-                      SizedBox(width: 8),
-                      Text('Pengguna', style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
-                    ],),
-                  )
-                  Expanded(
-                    child: Text(': $userName',
-                        style: const TextStyle(fon),
-                        ))
 
-                ],)
-                // TODO: 4. Buat ProfileActions (tombol sign in/out)
+                // TODO: 3. Buat ProfileInfo (info pengguna: Pengguna, Nama, Favorit)
+                // Baris 1: Pengguna
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 3, //
+                      child: const Row(
+                        children: [
+                          Icon(Icons.lock, color: Colors.amber), //
+                          SizedBox(width: 8), //
+                          Text(
+                            'Pengguna', //
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ), //
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        ': ${isSignedIn ? userName : ''}', //
+                        style: const TextStyle(fontSize: 18), //
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4), //
+                Divider(color: Colors.deepPurple[100]), //
+                const SizedBox(height: 4), //
+                // Baris 2: Nama
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 3, //
+                      child: const Row(
+                        children: [
+                          Icon(Icons.person, color: Colors.blue), //
+                          SizedBox(width: 8),
+                          Text(
+                            'Nama', //
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        ': ${isSignedIn ? fullName : ''}', //
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    if (isSignedIn) const Icon(Icons.edit), //
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Divider(color: Colors.deepPurple[100]),
+                const SizedBox(height: 4),
+
+                // Baris 3: Favorit
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 3, //
+                      child: const Row(
+                        children: [
+                          Icon(Icons.favorite, color: Colors.red), //
+                          SizedBox(width: 8),
+                          Text(
+                            'Favorit', //
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        ': ${favoriteCandiCount > 0 ? favoriteCandiCount : 0}', //
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Divider(color: Colors.deepPurple[100]), //
+                const SizedBox(height: 20), //
+                // TODO: 4. Buat ProfileActions (tombol Sign In / Sign Out)
+                isSignedIn
+                    ? TextButton(
+                        onPressed: signOut, //
+                        child: const Text('Sign Out'), //
+                      )
+                    : TextButton(
+                        onPressed: signIn, //
+                        child: const Text('Sign In'), //
+                      ),
               ],
             ),
           ),
         ],
-      ), // PERBAIKAN: Menambahkan titik koma (;) di sini
+      ),
     );
   }
 }
