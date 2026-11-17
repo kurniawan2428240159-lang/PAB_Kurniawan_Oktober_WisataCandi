@@ -58,6 +58,20 @@ class _SearchScreenState extends State<SearchScreen> {
                         child: Image.asset(candi.imageAsset, fit: BoxFit.cover),
                       ),
                     ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          candi.name,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(candi.location),
+                      ],
+                    ),
                   ],
                 ),
               );
